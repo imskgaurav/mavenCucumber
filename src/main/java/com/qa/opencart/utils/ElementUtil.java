@@ -25,8 +25,8 @@ import com.qa.opencart.factory.DriverFactory;
 import io.qameta.allure.Step;
 public class ElementUtil {
 
-    private WebDriver driver;
-    private JavaScriptUtil jsUtil;
+    private final WebDriver driver;
+    private final JavaScriptUtil jsUtil;
 
     public ElementUtil(WebDriver driver) {
         this.driver = driver;
@@ -281,7 +281,7 @@ public class ElementUtil {
      */
     public void doActionsSendKeysWithPause(By locator, String value, long pauseTime) {
         Actions act = new Actions(driver);
-        char ch[] = value.toCharArray();
+        char[] ch = value.toCharArray();
         for (char c : ch) {
             act.sendKeys(getElement(locator), String.valueOf(c)).pause(pauseTime).perform();
         }
@@ -296,7 +296,7 @@ public class ElementUtil {
      */
     public void doActionsSendKeysWithPause(By locator, String value) {
         Actions act = new Actions(driver);
-        char ch[] = value.toCharArray();
+        char[] ch = value.toCharArray();
         for (char c : ch) {
             act.sendKeys(getElement(locator), String.valueOf(c)).pause(500).perform();
         }
@@ -452,6 +452,8 @@ public class ElementUtil {
     @Step("waiting for the title and capturing it...")
     public String waitForTitleToBe(String titleVal, int timeOut) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+
+        ///wait.until(ExpectedConditions.titleIs())
 
         try {
             if (wait.until(ExpectedConditions.titleIs(titleVal))) {
